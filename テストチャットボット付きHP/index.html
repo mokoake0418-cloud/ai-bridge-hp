@@ -377,6 +377,195 @@
       color: rgba(255,255,255,0.35);
     }
 
+    /* ===== チャットウィジェット ===== */
+    #chat-toggle {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(224,112,144,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #chat-toggle:hover {
+      transform: scale(1.08);
+      box-shadow: 0 10px 32px rgba(224,112,144,0.55);
+    }
+    #chat-toggle .chat-badge {
+      position: absolute;
+      top: 0; right: 0;
+      width: 18px; height: 18px;
+      background: #e04040;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      font-size: 0.6rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    #chat-window {
+      position: fixed;
+      bottom: 100px;
+      right: 28px;
+      z-index: 9998;
+      width: 360px;
+      max-width: calc(100vw - 40px);
+      height: 520px;
+      max-height: calc(100vh - 130px);
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(58,42,48,0.18);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.92) translateY(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), opacity 0.2s;
+    }
+    #chat-window.open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .chat-header {
+      background: linear-gradient(90deg, var(--pink-main), var(--pink-dark));
+      color: #fff;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chat-header-icon { font-size: 1.4rem; }
+    .chat-header-info { flex: 1; }
+    .chat-header-info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 1px; }
+    .chat-header-info p { font-size: 0.72rem; opacity: 0.85; }
+    .chat-close {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.8);
+      font-size: 1.3rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 2px 4px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .chat-close:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--pink-pale);
+    }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-thumb { background: var(--pink-mid); border-radius: 4px; }
+
+    .chat-bubble {
+      max-width: 82%;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+    .chat-bubble.bot {
+      background: #fff;
+      color: var(--text-dark);
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 8px rgba(58,42,48,0.08);
+      align-self: flex-start;
+    }
+    .chat-bubble.user {
+      background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+      color: #fff;
+      border-bottom-right-radius: 4px;
+      align-self: flex-end;
+    }
+    .chat-bubble.typing { opacity: 0.7; }
+    .typing-dots {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+      padding: 4px 0;
+    }
+    .typing-dots span {
+      width: 7px; height: 7px;
+      background: var(--pink-main);
+      border-radius: 50%;
+      animation: typing-bounce 1.2s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing-bounce {
+      0%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-6px); }
+    }
+
+    .chat-input-area {
+      display: flex;
+      gap: 8px;
+      padding: 12px 14px;
+      background: #fff;
+      border-top: 1px solid var(--pink-mid);
+    }
+    .chat-input-area textarea {
+      flex: 1;
+      resize: none;
+      border: 1.5px solid var(--pink-mid);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: var(--text-dark);
+      background: var(--pink-pale);
+      outline: none;
+      line-height: 1.5;
+      max-height: 96px;
+      min-height: 40px;
+      overflow-y: auto;
+      transition: border-color 0.2s;
+    }
+    .chat-input-area textarea:focus { border-color: var(--pink-main); }
+    .chat-input-area textarea::placeholder { color: #c0a0ac; }
+    .chat-send {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+      border: none;
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 3px 10px rgba(224,112,144,0.35);
+      align-self: flex-end;
+    }
+    .chat-send:hover { transform: scale(1.08); }
+    .chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
     /* ===== レスポンシブ ===== */
     @media (max-width: 768px) {
       nav { gap: 1rem; }
@@ -564,6 +753,191 @@
       <p class="footer-copy">&copy; 2024 AIブリッジ株式会社 All Rights Reserved.</p>
     </div>
   </footer>
+
+  <!-- チャットウィジェット -->
+  <!-- フローティングボタン -->
+  <button id="chat-toggle" aria-label="チャットボットを開く">
+    <span id="chat-icon">💬</span>
+    <span class="chat-badge" id="chat-badge" style="display:none">1</span>
+  </button>
+
+  <!-- チャットウィンドウ -->
+  <div id="chat-window" role="dialog" aria-label="AIアシスタント">
+    <div class="chat-header">
+      <span class="chat-header-icon">🤖</span>
+      <div class="chat-header-info">
+        <h3>AIブリッジ AIアシスタント</h3>
+        <p>サービスについてお気軽にご質問ください</p>
+      </div>
+      <button class="chat-close" id="chat-close" aria-label="閉じる">✕</button>
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      <!-- 初期メッセージはJSで挿入 -->
+    </div>
+
+    <div class="chat-input-area">
+      <textarea
+        id="chat-input"
+        placeholder="メッセージを入力…（Enterで送信）"
+        rows="1"
+        aria-label="メッセージ入力"
+      ></textarea>
+      <button class="chat-send" id="chat-send" aria-label="送信">➤</button>
+    </div>
+  </div>
+
+  <!-- JS：チャットボット -->
+  <script>
+    (function () {
+      const CHAT_API = 'http://localhost:5000/chat';
+
+      const toggle   = document.getElementById('chat-toggle');
+      const chatIcon = document.getElementById('chat-icon');
+      const badge    = document.getElementById('chat-badge');
+      const win      = document.getElementById('chat-window');
+      const closeBtn = document.getElementById('chat-close');
+      const messages = document.getElementById('chat-messages');
+      const input    = document.getElementById('chat-input');
+      const sendBtn  = document.getElementById('chat-send');
+
+      // 会話履歴（Claude API に渡す messages 配列）
+      let history = [];
+      let isOpen  = false;
+      let isSending = false;
+
+      /* ── ウィンドウ開閉 ── */
+      function openChat() {
+        isOpen = true;
+        win.classList.add('open');
+        chatIcon.textContent = '✕';
+        badge.style.display = 'none';
+        input.focus();
+        // 初回のみ挨拶を表示
+        if (history.length === 0) {
+          addBubble('bot', 'こんにちは！AIブリッジのAIアシスタントです 😊\nサービス・料金・導入事例など、お気軽にご質問ください！');
+        }
+      }
+      function closeChat() {
+        isOpen = false;
+        win.classList.remove('open');
+        chatIcon.textContent = '💬';
+      }
+
+      toggle.addEventListener('click', () => isOpen ? closeChat() : openChat());
+      closeBtn.addEventListener('click', closeChat);
+
+      /* ── メッセージバブルを追加 ── */
+      function addBubble(role, text, isTyping = false) {
+        const div = document.createElement('div');
+        div.className = `chat-bubble ${role}${isTyping ? ' typing' : ''}`;
+        if (isTyping) {
+          div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+        } else {
+          div.textContent = text;
+        }
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+        return div;
+      }
+
+      /* ── メッセージ送信 ── */
+      async function sendMessage() {
+        const text = input.value.trim();
+        if (!text || isSending) return;
+
+        // ユーザーメッセージを表示＆履歴に追加
+        addBubble('user', text);
+        history.push({ role: 'user', content: text });
+        input.value = '';
+        input.style.height = 'auto';
+        isSending = true;
+        sendBtn.disabled = true;
+
+        // タイピングインジケーター
+        const typingEl = addBubble('bot', '', true);
+
+        try {
+          const response = await fetch(CHAT_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: history }),
+          });
+
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          // SSE ストリーム読み取り
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          let botText = '';
+
+          // タイピングをテキストバブルに切り替え
+          typingEl.classList.remove('typing');
+          typingEl.innerHTML = '';
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value, { stream: true });
+            const lines = chunk.split('\n');
+
+            for (const line of lines) {
+              if (!line.startsWith('data: ')) continue;
+              const payload = line.slice(6);
+              if (payload === '[DONE]') break;
+
+              try {
+                const parsed = JSON.parse(payload);
+                if (parsed.error) {
+                  typingEl.textContent = `⚠️ ${parsed.error}`;
+                  break;
+                }
+                if (parsed.text) {
+                  botText += parsed.text;
+                  typingEl.textContent = botText;
+                  messages.scrollTop = messages.scrollHeight;
+                }
+              } catch (e) { /* JSON parse エラーはスキップ */ }
+            }
+          }
+
+          // 履歴に追加
+          if (botText) {
+            history.push({ role: 'assistant', content: botText });
+          }
+
+        } catch (err) {
+          typingEl.classList.remove('typing');
+          typingEl.textContent = '⚠️ サーバーに接続できません。\nserver.py を起動してから再度お試しください。';
+        } finally {
+          isSending = false;
+          sendBtn.disabled = false;
+          input.focus();
+        }
+      }
+
+      /* ── Enter キーで送信（Shift+Enter は改行） ── */
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+      sendBtn.addEventListener('click', sendMessage);
+
+      /* ── テキストエリアの高さ自動調整 ── */
+      input.addEventListener('input', () => {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 96) + 'px';
+      });
+
+      /* ── 5秒後にバッジを表示して存在をアピール ── */
+      setTimeout(() => {
+        if (!isOpen) badge.style.display = 'flex';
+      }, 5000);
+    })();
+  </script>
 
   <!-- JS：フォームバリデーション -->
   <script>
