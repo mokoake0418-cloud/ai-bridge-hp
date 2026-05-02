@@ -790,7 +790,7 @@
   <!-- JS：チャットボット -->
   <script>
     (function () {
-      const CHAT_API = 'http://localhost:5000/chat';
+      const CHAT_API = '/api/chat';
 
       const toggle   = document.getElementById('chat-toggle');
       const chatIcon = document.getElementById('chat-icon');
@@ -866,50 +866,28 @@
 
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-          // SSE ストリーム読み取り
-          const reader = response.body.getReader();
-          const decoder = new TextDecoder();
-          let botText = '';
+          // JSON レスポンスを受け取る
+          const data = await response.json();
 
           // タイピングをテキストバブルに切り替え
           typingEl.classList.remove('typing');
           typingEl.innerHTML = '';
 
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            const chunk = decoder.decode(value, { stream: true });
-            const lines = chunk.split('\n');
-
-            for (const line of lines) {
-              if (!line.startsWith('data: ')) continue;
-              const payload = line.slice(6);
-              if (payload === '[DONE]') break;
-
-              try {
-                const parsed = JSON.parse(payload);
-                if (parsed.error) {
-                  typingEl.textContent = `⚠️ ${parsed.error}`;
-                  break;
-                }
-                if (parsed.text) {
-                  botText += parsed.text;
-                  typingEl.textContent = botText;
-                  messages.scrollTop = messages.scrollHeight;
-                }
-              } catch (e) { /* JSON parse エラーはスキップ */ }
+          if (data.error) {
+            typingEl.textContent = `⚠️ ${data.error}`;
+          } else {
+            const botText = data.text || '';
+            typingEl.textContent = botText;
+            messages.scrollTop = messages.scrollHeight;
+            // 履歴に追加
+            if (botText) {
+              history.push({ role: 'assistant', content: botText });
             }
-          }
-
-          // 履歴に追加
-          if (botText) {
-            history.push({ role: 'assistant', content: botText });
           }
 
         } catch (err) {
           typingEl.classList.remove('typing');
-          typingEl.textContent = '⚠️ サーバーに接続できません。\nserver.py を起動してから再度お試しください。';
+          typingEl.textContent = '⚠️ エラーが発生しました。しばらくしてから再度お試しください。';
         } finally {
           isSending = false;
           sendBtn.disabled = false;
