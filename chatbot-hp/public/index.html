@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIブリッジ株式会社 | About</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== リセット & 基本 ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      color: #4a3a3a;
+      background: #fff;
+      line-height: 1.7;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; }
+
+    /* ===== カラー変数 ===== */
+    :root {
+      --pink-dark:   #e07090;
+      --pink-main:   #f07ca0;
+      --pink-mid:    #f9b8cc;
+      --pink-light:  #fde8f0;
+      --pink-pale:   #fff5f8;
+      --text-dark:   #3a2a30;
+      --text-mid:    #6b4c55;
+      --shadow:      0 4px 18px rgba(224,112,144,0.15);
+    }
+
+    /* ===== ヘッダー ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--pink-mid);
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--pink-dark);
+      letter-spacing: 0.02em;
+    }
+    .logo span { color: var(--text-dark); }
+    nav { display: flex; gap: 1.8rem; }
+    nav a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--pink-dark); }
+
+    /* ===== ヒーロー ===== */
+    #hero {
+      background: linear-gradient(135deg, #fde8f0 0%, #ffd6e7 50%, #fce4ef 100%);
+      padding: 160px 5% 140px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 30%, rgba(255,200,220,0.5) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--pink-main);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 4px 16px;
+      border-radius: 999px;
+      margin-bottom: 1.2rem;
+    }
+    #hero h1 {
+      font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.2rem;
+    }
+    #hero h1 em {
+      font-style: normal;
+      color: var(--pink-dark);
+    }
+    #hero p {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      max-width: 560px;
+      margin: 0 auto 2.4rem;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--pink-main), var(--pink-dark));
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 14px 40px;
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(224,112,144,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(224,112,144,0.45);
+    }
+
+    /* ===== セクション共通 ===== */
+    section { padding: 80px 5%; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--pink-dark);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.6rem;
+    }
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      max-width: 560px;
+      margin-bottom: 3rem;
+    }
+
+    /* ===== サービス ===== */
+    #services { background: var(--pink-pale); }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.6rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem 1.8rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(224,112,144,0.22);
+    }
+    .card-icon {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.6rem;
+    }
+    .card p { font-size: 0.88rem; color: var(--text-mid); }
+
+    /* ===== 実績 ===== */
+    #results { background: #fff; }
+    .case-card {
+      max-width: 640px;
+      border-left: 4px solid var(--pink-main);
+      padding: 1.4rem 1.8rem;
+    }
+    .case-card .case-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--pink-dark);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .case-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+    .case-card p { font-size: 0.9rem; color: var(--text-mid); }
+    .case-card .result-num {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--pink-dark);
+    }
+    .case-card .result-num span {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      margin-left: 4px;
+    }
+
+    /* ===== 会社概要 ===== */
+    #company { background: var(--pink-pale); }
+    .company-table {
+      width: 100%;
+      max-width: 680px;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+    }
+    .company-table tr { border-bottom: 1px solid var(--pink-mid); }
+    .company-table tr:last-child { border-bottom: none; }
+    .company-table th {
+      width: 36%;
+      padding: 1rem 1.2rem;
+      text-align: left;
+      font-weight: 700;
+      color: var(--pink-dark);
+      background: rgba(255,220,235,0.35);
+      white-space: nowrap;
+    }
+    .company-table td {
+      padding: 1rem 1.2rem;
+      color: var(--text-dark);
+    }
+
+    /* ===== お問い合わせ ===== */
+    #contact { background: #fff; }
+    .contact-wrap {
+      max-width: 580px;
+    }
+    .form-group { margin-bottom: 1.4rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-mid);
+      margin-bottom: 0.4rem;
+    }
+    .form-group label .req {
+      color: var(--pink-dark);
+      margin-left: 4px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--pink-mid);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      background: var(--pink-pale);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--pink-main);
+      box-shadow: 0 0 0 3px rgba(240,124,160,0.18);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(90deg, var(--pink-main), var(--pink-dark));
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 14px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(224,112,144,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(224,112,144,0.42);
+    }
+    .form-msg {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--pink-dark);
+      display: none;
+    }
+
+    /* ===== フッター ===== */
+    footer {
+      background: var(--text-dark);
+      color: rgba(255,255,255,0.65);
+      font-size: 0.85rem;
+    }
+    .footer-main {
+      display: flex;
+      gap: 4rem;
+      padding: 56px 5% 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      flex-shrink: 0;
+      min-width: 180px;
+    }
+    .footer-logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .footer-logo span { color: var(--pink-mid); }
+    .footer-tagline {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+    }
+    .footer-nav {
+      display: flex;
+      gap: 3.5rem;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .footer-col h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 1.1rem;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--pink-mid); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 5%;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    .footer-legal {
+      display: flex;
+      gap: 1.6rem;
+      flex-wrap: wrap;
+    }
+    .footer-legal a {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.78rem;
+      transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--pink-mid); }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ===== チャットウィジェット ===== */
+    #chat-toggle {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(224,112,144,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #chat-toggle:hover {
+      transform: scale(1.08);
+      box-shadow: 0 10px 32px rgba(224,112,144,0.55);
+    }
+    #chat-toggle .chat-badge {
+      position: absolute;
+      top: 0; right: 0;
+      width: 18px; height: 18px;
+      background: #e04040;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      font-size: 0.6rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    #chat-window {
+      position: fixed;
+      bottom: 100px;
+      right: 28px;
+      z-index: 9998;
+      width: 360px;
+      max-width: calc(100vw - 40px);
+      height: 520px;
+      max-height: calc(100vh - 130px);
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(58,42,48,0.18);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.92) translateY(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), opacity 0.2s;
+    }
+    #chat-window.open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .chat-header {
+      background: linear-gradient(90deg, var(--pink-main), var(--pink-dark));
+      color: #fff;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chat-header-icon { font-size: 1.4rem; }
+    .chat-header-info { flex: 1; }
+    .chat-header-info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 1px; }
+    .chat-header-info p { font-size: 0.72rem; opacity: 0.85; }
+    .chat-close {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.8);
+      font-size: 1.3rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 2px 4px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .chat-close:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--pink-pale);
+    }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-thumb { background: var(--pink-mid); border-radius: 4px; }
+
+    .chat-bubble {
+      max-width: 82%;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+    .chat-bubble.bot {
+      background: #fff;
+      color: var(--text-dark);
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 8px rgba(58,42,48,0.08);
+      align-self: flex-start;
+    }
+    .chat-bubble.user {
+      background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+      color: #fff;
+      border-bottom-right-radius: 4px;
+      align-self: flex-end;
+    }
+    .chat-bubble.typing { opacity: 0.7; }
+    .typing-dots {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+      padding: 4px 0;
+    }
+    .typing-dots span {
+      width: 7px; height: 7px;
+      background: var(--pink-main);
+      border-radius: 50%;
+      animation: typing-bounce 1.2s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing-bounce {
+      0%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-6px); }
+    }
+
+    .chat-input-area {
+      display: flex;
+      gap: 8px;
+      padding: 12px 14px;
+      background: #fff;
+      border-top: 1px solid var(--pink-mid);
+    }
+    .chat-input-area textarea {
+      flex: 1;
+      resize: none;
+      border: 1.5px solid var(--pink-mid);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: var(--text-dark);
+      background: var(--pink-pale);
+      outline: none;
+      line-height: 1.5;
+      max-height: 96px;
+      min-height: 40px;
+      overflow-y: auto;
+      transition: border-color 0.2s;
+    }
+    .chat-input-area textarea:focus { border-color: var(--pink-main); }
+    .chat-input-area textarea::placeholder { color: #c0a0ac; }
+    .chat-send {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+      border: none;
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 3px 10px rgba(224,112,144,0.35);
+      align-self: flex-end;
+    }
+    .chat-send:hover { transform: scale(1.08); }
+    .chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ===== レスポンシブ ===== */
+    @media (max-width: 768px) {
+      nav { gap: 1rem; }
+      nav a { font-size: 0.8rem; }
+      #hero { padding: 100px 5% 90px; }
+      .footer-main { flex-direction: column; gap: 2rem; }
+      .footer-nav { gap: 2rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .case-card { flex-direction: column; gap: 1rem; }
+      .company-table th { width: 40%; }
+    }
+    @media (max-width: 480px) {
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header>
+    <div class="logo">AI<span>ブリッジ</span>株式会社</div>
+    <nav>
+      <a href="#services">サービス</a>
+      <a href="#results">実績</a>
+      <a href="#company">会社概要</a>
+      <a href="#contact">お問い合わせ</a>
+    </nav>
+  </header>
+
+  <!-- ヒーロー -->
+  <section id="hero">
+    <div class="hero-tag">IT / DX / AI</div>
+    <h1>AIで、もっと速く。<br /><em>もっと安く。</em></h1>
+    <p>AIブリッジは、中小企業のAI導入・DX推進を<br />低コスト・最短2週間でサポートします。</p>
+    <a href="#contact" class="btn-primary">無料相談はこちら</a>
+  </section>
+
+  <!-- サービス紹介 -->
+  <section id="services">
+    <p class="section-label">Services</p>
+    <h2 class="section-title">3つのサービス</h2>
+    <p class="section-desc">業種・規模を問わず、貴社の課題に合わせた最適なAI・DXソリューションをご提供します。</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>AI業務自動化</h3>
+        <p>繰り返し作業・データ入力・メール対応などをAIで自動化。人的ミスを減らし、コア業務に集中できる環境を構築します。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>DXコンサルティング</h3>
+        <p>現状の業務フローを診断し、デジタル化・効率化のロードマップを策定。導入後の定着支援まで一貫してサポートします。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💡</div>
+        <h3>データ活用支援</h3>
+        <p>社内に眠るデータを可視化・分析。売上予測・需要予測・顧客分析など、経営判断を数字で支える仕組みを作ります。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 導入実績 -->
+  <section id="results">
+    <p class="section-label">Results</p>
+    <h2 class="section-title">導入実績</h2>
+    <p class="section-desc">実際にAIブリッジのソリューションを導入いただいた事例です。</p>
+    <div class="case-card">
+      <p class="case-tag">小売業 ／ 導入事例</p>
+      <h3>株式会社サンプル商事</h3>
+      <p>在庫管理業務のAI化プロジェクト。従来は担当者が手作業で行っていた在庫確認・発注業務をAIツールに置き換え、ヒューマンエラーを排除。</p>
+      <div class="result-num">40%<span>の業務工数削減を実現</span></div>
+    </div>
+  </section>
+
+  <!-- 会社概要 -->
+  <section id="company">
+    <p class="section-label">Company</p>
+    <h2 class="section-title">会社概要</h2>
+    <p class="section-desc">AIブリッジ株式会社について</p>
+    <table class="company-table">
+      <tr>
+        <th>会社名</th>
+        <td>AIブリッジ株式会社</td>
+      </tr>
+      <tr>
+        <th>設立</th>
+        <td>2020年4月</td>
+      </tr>
+      <tr>
+        <th>所在地</th>
+        <td>〒150-0001 東京都渋谷区神宮前1丁目1番1号</td>
+      </tr>
+      <tr>
+        <th>事業内容</th>
+        <td>AI業務効率化支援・DXコンサルティング・データ活用支援</td>
+      </tr>
+      <tr>
+        <th>特徴</th>
+        <td>最短2週間での導入対応・中小企業向け低コストプラン</td>
+      </tr>
+      <tr>
+        <th>許認可</th>
+        <td>プライバシーマーク取得・情報セキュリティマネジメントシステム認証（ISO 27001）</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- お問い合わせ -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">お問い合わせ</h2>
+    <p class="section-desc">ご質問・無料相談のお申し込みはこちらからお気軽にどうぞ。</p>
+    <div class="contact-wrap">
+      <form id="contactForm" novalidate>
+        <div class="form-group">
+          <label>お名前<span class="req">*</span></label>
+          <input type="text" id="name" placeholder="例：山田 太郎" />
+        </div>
+        <div class="form-group">
+          <label>メールアドレス<span class="req">*</span></label>
+          <input type="email" id="email" placeholder="例：taro@example.com" />
+        </div>
+        <div class="form-group">
+          <label>お問い合わせ内容<span class="req">*</span></label>
+          <textarea id="message" placeholder="ご質問・ご相談内容をご記入ください"></textarea>
+        </div>
+        <button type="submit" class="btn-submit">送信する</button>
+        <p class="form-msg" id="formMsg">✅ ありがとうございます！内容を確認の上、担当者よりご連絡いたします。</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    <div class="footer-main">
+      <!-- ブランド -->
+      <div class="footer-brand">
+        <span class="footer-logo">AI<span>ブリッジ</span>株式会社</span>
+        <p class="footer-tagline">AIで、もっと速く。<br />もっと安く。</p>
+      </div>
+
+      <!-- ナビカラム -->
+      <nav class="footer-nav">
+        <div class="footer-col">
+          <h4>Service</h4>
+          <ul>
+            <li><a href="#services">AI業務自動化</a></li>
+            <li><a href="#services">DXコンサルティング</a></li>
+            <li><a href="#services">データ活用支援</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Results</h4>
+          <ul>
+            <li><a href="#results">導入事例</a></li>
+            <li><a href="#results">お客様の声</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#company">会社概要</a></li>
+            <li><a href="#company">企業理念</a></li>
+            <li><a href="#company">拠点情報</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="#contact">お問い合わせ</a></li>
+            <li><a href="#contact">無料相談</a></li>
+            <li><a href="#contact">資料請求</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <!-- 下段：法務リンク＋コピーライト -->
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <a href="#">プライバシーポリシー</a>
+        <a href="#">サイト利用規約</a>
+        <a href="#">特定商取引法に基づく表記</a>
+      </div>
+      <p class="footer-copy">&copy; 2024 AIブリッジ株式会社 All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- チャットウィジェット -->
+  <!-- フローティングボタン -->
+  <button id="chat-toggle" aria-label="チャットボットを開く">
+    <span id="chat-icon">💬</span>
+    <span class="chat-badge" id="chat-badge" style="display:none">1</span>
+  </button>
+
+  <!-- チャットウィンドウ -->
+  <div id="chat-window" role="dialog" aria-label="AIアシスタント">
+    <div class="chat-header">
+      <span class="chat-header-icon">🤖</span>
+      <div class="chat-header-info">
+        <h3>AIブリッジ AIアシスタント</h3>
+        <p>サービスについてお気軽にご質問ください</p>
+      </div>
+      <button class="chat-close" id="chat-close" aria-label="閉じる">✕</button>
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      <!-- 初期メッセージはJSで挿入 -->
+    </div>
+
+    <div class="chat-input-area">
+      <textarea
+        id="chat-input"
+        placeholder="メッセージを入力…（Enterで送信）"
+        rows="1"
+        aria-label="メッセージ入力"
+      ></textarea>
+      <button class="chat-send" id="chat-send" aria-label="送信">➤</button>
+    </div>
+  </div>
+
+  <!-- JS：チャットボット -->
+  <script>
+    (function () {
+      const CHAT_API = '/api/chat';
+
+      const toggle   = document.getElementById('chat-toggle');
+      const chatIcon = document.getElementById('chat-icon');
+      const badge    = document.getElementById('chat-badge');
+      const win      = document.getElementById('chat-window');
+      const closeBtn = document.getElementById('chat-close');
+      const messages = document.getElementById('chat-messages');
+      const input    = document.getElementById('chat-input');
+      const sendBtn  = document.getElementById('chat-send');
+
+      // 会話履歴（Claude API に渡す messages 配列）
+      let history = [];
+      let isOpen  = false;
+      let isSending = false;
+
+      /* ── ウィンドウ開閉 ── */
+      function openChat() {
+        isOpen = true;
+        win.classList.add('open');
+        chatIcon.textContent = '✕';
+        badge.style.display = 'none';
+        input.focus();
+        // 初回のみ挨拶を表示
+        if (history.length === 0) {
+          addBubble('bot', 'こんにちは！AIブリッジのAIアシスタントです 😊\nサービス・料金・導入事例など、お気軽にご質問ください！');
+        }
+      }
+      function closeChat() {
+        isOpen = false;
+        win.classList.remove('open');
+        chatIcon.textContent = '💬';
+      }
+
+      toggle.addEventListener('click', () => isOpen ? closeChat() : openChat());
+      closeBtn.addEventListener('click', closeChat);
+
+      /* ── メッセージバブルを追加 ── */
+      function addBubble(role, text, isTyping = false) {
+        const div = document.createElement('div');
+        div.className = `chat-bubble ${role}${isTyping ? ' typing' : ''}`;
+        if (isTyping) {
+          div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+        } else {
+          div.textContent = text;
+        }
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+        return div;
+      }
+
+      /* ── メッセージ送信 ── */
+      async function sendMessage() {
+        const text = input.value.trim();
+        if (!text || isSending) return;
+
+        // ユーザーメッセージを表示＆履歴に追加
+        addBubble('user', text);
+        history.push({ role: 'user', content: text });
+        input.value = '';
+        input.style.height = 'auto';
+        isSending = true;
+        sendBtn.disabled = true;
+
+        // タイピングインジケーター
+        const typingEl = addBubble('bot', '', true);
+
+        try {
+          const response = await fetch(CHAT_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: history }),
+          });
+
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          // JSON レスポンスを受け取る
+          const data = await response.json();
+
+          // タイピングをテキストバブルに切り替え
+          typingEl.classList.remove('typing');
+          typingEl.innerHTML = '';
+
+          if (data.error) {
+            typingEl.textContent = `⚠️ ${data.error}`;
+          } else {
+            const botText = data.text || '';
+            typingEl.textContent = botText;
+            messages.scrollTop = messages.scrollHeight;
+            // 履歴に追加
+            if (botText) {
+              history.push({ role: 'assistant', content: botText });
+            }
+          }
+
+        } catch (err) {
+          typingEl.classList.remove('typing');
+          typingEl.textContent = '⚠️ エラーが発生しました。しばらくしてから再度お試しください。';
+        } finally {
+          isSending = false;
+          sendBtn.disabled = false;
+          input.focus();
+        }
+      }
+
+      /* ── Enter キーで送信（Shift+Enter は改行） ── */
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+      sendBtn.addEventListener('click', sendMessage);
+
+      /* ── テキストエリアの高さ自動調整 ── */
+      input.addEventListener('input', () => {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 96) + 'px';
+      });
+
+      /* ── 5秒後にバッジを表示して存在をアピール ── */
+      setTimeout(() => {
+        if (!isOpen) badge.style.display = 'flex';
+      }, 5000);
+    })();
+  </script>
+
+  <!-- JS：フォームバリデーション -->
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name    = document.getElementById('name').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const msg     = document.getElementById('formMsg');
+
+      if (!name || !email || !message) {
+        msg.style.color = '#e05050';
+        msg.textContent = '⚠️ すべての項目を入力してください。';
+        msg.style.display = 'block';
+        return;
+      }
+      const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailReg.test(email)) {
+        msg.style.color = '#e05050';
+        msg.textContent = '⚠️ 正しいメールアドレスを入力してください。';
+        msg.style.display = 'block';
+        return;
+      }
+
+      // 成功メッセージ
+      msg.style.color = '';
+      msg.textContent = '✅ ありがとうございます！内容を確認の上、担当者よりご連絡いたします。';
+      msg.style.display = 'block';
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>
